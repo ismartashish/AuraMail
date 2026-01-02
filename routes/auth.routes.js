@@ -20,10 +20,10 @@ router.get(
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "http://localhost:5173/",
+    failureRedirect: "https://ismartashish.github.io/AuraMailer/",
   }),
   (req, res) => {
-    res.redirect("http://localhost:5173/dashboard");
+    res.redirect("https://ismartashish.github.io/AuraMailer/dashboard");
   }
 );
 
@@ -38,7 +38,7 @@ router.get("/me", (req, res) => {
 // Logout
 router.get("/logout", (req, res) => {
   req.logout(() => {
-    res.redirect("http://localhost:5173/");
+    res.redirect("https://ismartashish.github.io/AuraMailer/");
   });
 });
 
