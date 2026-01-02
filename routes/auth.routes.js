@@ -3,31 +3,40 @@ import passport from "passport";
 
 const router = express.Router();
 
-// Start Google OAuth
+/* ============================
+   START GOOGLE OAUTH
+============================ */
 router.get(
   "/google",
   passport.authenticate("google", {
     scope: [
       "profile",
       "email",
-      "https://www.googleapis.com/auth/gmail.send"
+      "https://www.googleapis.com/auth/gmail.send",
     ],
-    accessType: "offline",   // 🔥 REQUIRED for refresh token
-    prompt: "consent",       // 🔥 FORCE Google to re-ask permission
+    accessType: "offline", // refresh token
+    prompt: "consent",
   })
 );
-// Google OAuth callback
+
+/* ============================
+   GOOGLE CALLBACK
+============================ */
 router.get(
   "/google/callback",
   passport.authenticate("google", {
-    failureRedirect: "https://ismartashish.github.io/AuraMailer/",
+    failureRedirect: `${process.env.FRONTEND_URL}/#/`,
+    session: true,
   }),
   (req, res) => {
-    res.redirect("https://ismartashish.github.io/AuraMailer/dashboard");
+    // ✅ ALWAYS redirect using HashRouter
+    res.redirect(`${process.env.FRONTEND_URL}/#/dashboard`);
   }
 );
 
-// ✅ REQUIRED BY FRONTEND
+/* ============================
+   CURRENT USER
+============================ */
 router.get("/me", (req, res) => {
   if (!req.user) {
     return res.status(401).json({ user: null });
@@ -35,10 +44,12 @@ router.get("/me", (req, res) => {
   res.json({ user: req.user });
 });
 
-// Logout
+/* ============================
+   LOGOUT
+============================ */
 router.get("/logout", (req, res) => {
   req.logout(() => {
-    res.redirect("https://ismartashish.github.io/AuraMailer/");
+    res.redirect(`${process.env.FRONTEND_URL}/#/`);
   });
 });
 
