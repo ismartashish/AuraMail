@@ -1,5 +1,6 @@
 import express from "express";
 import passport from "passport";
+console.log("✅ AUTH ROUTES FILE LOADED");
 
 const router = express.Router();
 
