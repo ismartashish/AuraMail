@@ -26,7 +26,7 @@ app.set("trust proxy", 1); // 🔥 REQUIRED for secure cookies
 ================================ */
 app.use(
   cors({
-    origin: process.env.FRONTEND_URL,
+    origin: "https://ismartashish.github.io",
     credentials: true,
   })
 );
